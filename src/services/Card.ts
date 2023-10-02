@@ -9,7 +9,7 @@ interface CardData {
 const sendCardData = async (cardData: CardData) => {
   const { data } = await axios
     .post(
-      `${process.env.REACT_APP_API_URL}/card/validate`,
+      `https://ecommerce-api-production-1642.up.railway.app/card/validate`,
       {
         ...cardData,
       },
