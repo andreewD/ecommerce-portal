@@ -12,6 +12,10 @@ const Home = () => {
     focus: '',
   })
 
+  const [validCard, setValidCard] = useState<boolean>()
+  const [message, setMessage] = useState<string>('')
+  const [errors, setErrors] = useState<string[]>()
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
     setState(prevState => ({ ...prevState, [name]: value }))
@@ -21,15 +25,29 @@ const Home = () => {
     setState(prevState => ({ ...prevState, focus: event.target.name }))
   }
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    console.log(state)
-    sendCardData({
-        pan: state.number,
-        cvv: state.cvc,
-        expirationDate: ''
+
+    const cardValidationData = await sendCardData({
+      pan: state.number,
+      cvv: state.cvc,
+      expirationDate: state.expiry,
     })
+   
+    if (cardValidationData.isValid) {
+      setValidCard(true)
+    } else {
+      if (cardValidationData.errors) {
+        setErrors(cardValidationData.errors)
+      }
+
+      if (cardValidationData.message) {
+        setMessage(cardValidationData.message)
+      }
+
+      setValidCard(false)
     }
+  }
 
   return (
     <div>
@@ -72,6 +90,7 @@ const Home = () => {
                 name="expiry"
                 placeholder="MM/YY Expiry"
                 className="form-control"
+                pattern="\d\d/\d\d"
                 value={state.expiry}
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
@@ -79,7 +98,7 @@ const Home = () => {
             </div>
             <div className="col-6">
               <input
-                type="number"
+                type="tel"
                 name="cvc"
                 placeholder="CVC"
                 className="form-control"
@@ -95,6 +114,25 @@ const Home = () => {
             </button>
           </div>
         </Form>
+
+        {validCard ? (
+          <div className="alert alert-success mt-3" role="alert">
+            <h4 className="alert-heading">Well done!</h4>
+            <p>Your card is valid, you can continue with your purchase.</p>
+          </div>
+        ) : (
+          <div className="alert alert-danger mt-3" role="alert">
+            <h4 className="alert-heading">Oh snap!</h4>
+            <p>{message}</p>
+            {errors && (
+              <ul>
+                {errors.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
       </div>
     </div>
   )
