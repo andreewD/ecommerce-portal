@@ -46,7 +46,9 @@ const Home = () => {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-
+    setValidCard(undefined)
+    setMessage('')
+    setErrors(undefined)
     const cardValidationData = await sendCardData({
       pan: state.number,
       cvv: state.cvc,
