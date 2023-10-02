@@ -16,8 +16,27 @@ const Home = () => {
   const [message, setMessage] = useState<string>('')
   const [errors, setErrors] = useState<string[]>()
 
+  const clearValue = (value: string) => {
+    return value.replace(/\D+/g, '')
+  }
+
+  const formatExpirationDate = (value: string) => {
+    value = clearValue(value)
+    if (value.length >= 3) {
+      return `${value.slice(0, 2)}/${value.slice(2, 4)}`
+    }
+    return value
+  }
+
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target
+    if (event.target.name === 'expiry') {
+      setState(prevState => ({
+        ...prevState,
+        [name]: formatExpirationDate(value),
+      }))
+      return
+    }
     setState(prevState => ({ ...prevState, [name]: value }))
   }
 
