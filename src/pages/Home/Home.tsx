@@ -61,35 +61,38 @@ const Home = () => {
         focused={state.focus as Focused}
       />
       <Form onSubmit={handleSubmit}>
-        <div className="form-group">
+        <div className="form-group mt-3">
           <input
             type="tel"
             name="number"
             placeholder="Card Number"
+            required
             value={state.number}
             onChange={handleInputChange}
             onFocus={handleInputFocus}
             className="form-control"
           />
         </div>
-        <div className="form-group">
+        <div className="form-group mt-3">
           <input
             type="text"
             name="name"
             placeholder="Name"
             value={state.name}
+            required
             onChange={handleInputChange}
             onFocus={handleInputFocus}
             className="form-control"
           />
         </div>
-        <div className="row">
+        <div className="row mt-3">
           <div className="col-6">
             <input
               type="text"
               name="expiry"
               placeholder="MM/YY Expiry"
               className="form-control"
+              required
               pattern="\d\d/\d\d"
               value={state.expiry}
               onChange={handleInputChange}
@@ -101,6 +104,7 @@ const Home = () => {
               type="tel"
               name="cvc"
               placeholder="CVC"
+              required
               className="form-control"
               value={state.cvc}
               onChange={handleInputChange}
@@ -108,7 +112,7 @@ const Home = () => {
             />
           </div>
         </div>
-        <div className="form-actions">
+        <div className="d-flex form-actions mt-3 justify-content-center">
           <button type="submit" className="btn btn-primary btn-block">
             Submit
           </button>
@@ -147,7 +151,7 @@ const Home = () => {
           />
           <span>View frontend on Github</span>
         </CustomRectangle>
-        <CustomRectangle href="https://github.com/andreewD/ecommerce-portal">
+        <CustomRectangle href="https://github.com/andreewD/ecommerce-api">
           <WebLogo
             alt="View on Github"
             src="https://cdn.jsdelivr.net/gh/gilbarbara/logos@2017.12/logos/github-icon.svg"

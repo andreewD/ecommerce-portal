@@ -6,8 +6,9 @@ const Form = styled.form`
 `
 
 const Title = styled.h1`
+  text-align: center;
   font-weight: bold;
-  margin: 0 0 10px;
+  margin: 0 0 20px;
 `
 
 const AppBadges = styled.div`
